@@ -8,27 +8,39 @@ from compas.datastructures import Mesh
 from compas.geometry import Projection
 
 
-
-
-
 # Frame F representing a coordinate system
 F = Frame([10, 10, 2], [-2, 3, -2], [-2, 4, -2])
 width, length, height = 3, 5, 5
 box = Box(F, width, length, height)
 
+# Create a Projection (orthogonal)
+#plane = Plane([5,0,5], [0,1,0])
+#P = Projection.from_plane(plane)
 
+# Create a Projection ( parallel)
+point = [0, 0, 0]
+normal = [0, 0, 1]
+plane = Plane(point, normal)
+#direction = [1, 1, 1]
+#P = Projection.from_plane_and_direction(plane, direction)
 
-# Create a Projection (can be orthogonal, parallel or perspective)
-plane = Plane([0,0,0], [0,0,1])
-P = Projection.from_plane(plane)
+# Create a Projection ( perspective)
+center_of_projection = [1, 1, 0]
+P = Projection.from_plane_and_point(plane, center_of_projection)
 
 # Create a Mesh from the Box
 mesh = Mesh.from_shape(box)
-# Get transformation between world and frame F
+
+# Transform Mesh
 T = Transformation.from_frame_to_frame( Frame.worldXY(),F)
 
-# Apply transformation on box.
-mesh_projected = mesh.transformed(T)
+mesh_transformed = mesh.transformed(T)
+
+#Apply projection to mesh
+mesh_projected = mesh_transformed.Projection(P)
+
+
+
 
 # create artists
 artist1 = FrameArtist(Frame.worldXY())
@@ -40,4 +52,4 @@ artist5 = MeshArtist(mesh_projected)
 
 artist3.draw()
 artist2.draw()
-artist5.draw_edges(color="#ffff00")
+artist5.draw_edges(color="#fff000")
