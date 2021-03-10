@@ -9,47 +9,47 @@ from compas.geometry import Projection
 
 
 # Frame F representing a coordinate system
-F = Frame([10, 10, 2], [-2, 3, -2], [-2, 4, -2])
-width, length, height = 3, 5, 5
+F = Frame([6, 6, 7], [2, 3, 5], [2, 6, 7])
+width, length, height = 3, 3, 3
 box = Box(F, width, length, height)
 
 # Create a Projection (orthogonal)
-#plane = Plane([5,0,5], [0,1,0])
-#P = Projection.from_plane(plane)
+plane = ((1,4,0), (0,0,1))
+P = Projection.from_plane(plane)
 
 # Create a Projection ( parallel)
-point = [0, 0, 0]
-normal = [0, 0, 1]
-plane = Plane(point, normal)
+#point = [0, 0, 0]
+#normal = [0, 0, 1]
+#plane = Plane(point, normal)
 #direction = [1, 1, 1]
 #P = Projection.from_plane_and_direction(plane, direction)
 
 # Create a Projection ( perspective)
-center_of_projection = [1, 1, 0]
-P = Projection.from_plane_and_point(plane, center_of_projection)
+#center_of_projection = [1, 1, 0]
+#P = Projection.from_plane_and_point(plane, center_of_projection)
 
 # Create a Mesh from the Box
 mesh = Mesh.from_shape(box)
 
 # Transform Mesh
-T = Transformation.from_frame_to_frame( Frame.worldXY(),F)
+#T = Transformation.from_frame_to_frame( Frame.worldXY(),F)
 
-mesh_transformed = mesh.transformed(T)
+#mesh_transformed = mesh.transformed(T)
 
 #Apply projection to mesh
-mesh_projected = mesh_transformed.Projection(P)
+mesh_projected = mesh.transformed(P)
 
 
 
 
 # create artists
-artist1 = FrameArtist(Frame.worldXY())
+#artist1 = FrameArtist(Frame.worldXY())
 artist2 = BoxArtist(box)
-artist3 = FrameArtist(F)
+#artist3 = FrameArtist(F)
 artist5 = MeshArtist(mesh_projected)
 
 #Draw
 
-artist3.draw()
+#artist3.draw()
 artist2.draw()
 artist5.draw_edges(color="#fff000")
